@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Now You See It</title>
+
+
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="see" src="img/nowyouseeit.png" />
+
+    <div>
+        <button id="changeButton">Hide The Cat</button>
+        <button id="moon">Send Cat To The Moon</button>
+    </div>
+
+    <script>
+        let seeImage = document.getElementById('see');
+        let changeButton = document.getElementById('changeButton');
+        changeButton.addEventListener('click', function(e) {
+            seeImage.setAttribute('src', 'img/nowyoudont.png');
+        });
+
+        document.getElementById('moon').addEventListener('click', function(e) {
+            seeImage.setAttribute('class', 'hide');
+        });
+    </script>
+</body>
+
+</html>
