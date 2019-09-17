@@ -18,7 +18,7 @@
             <h1>Guess a Number</h1>
         </div>
         
-        <div id="directions">
+        <div id="directions" class = "resetParas">
             Guess a number between 1 and 99 in seven attempts!
             
             </br></br>
@@ -33,23 +33,13 @@
             <p id="lowOrHi"></p>
             <button id='reset'>Reset</button>
             
+            <br><br>
+            <p id="gamesWon"></p>
+            <p id="gamesLost"></p>
+            
         </div>
         
-        <script>
-            
-            var randomNumber = Math.floor(Math.random() *99) + 1;
-            var guesses = document.querySelector('#guesses');
-            var lastResult = document.querySelector('#lastResult');
-            var lowOrHi = document.querySelector('#lowOrHi');
-            
-            var guessSubmit = document.querySelector('.guessSubmit');
-            var guessField = document.querySelector('.guessField');
-            
-            var guessCount = 1;
-            var resetButton = document.querySelector('#reset');
-            resetButton.style.display = 'none';
-            
-        </script>
+        <script src="js/functions.js"></script>
         
     </body>
 </html>
