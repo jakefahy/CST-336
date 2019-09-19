@@ -1,0 +1,46 @@
+body {
+    background-color:black;
+    color:gray;
+}
+
+header, main, nav, footer {
+    text-align: center;
+}
+
+nav a { /* links within nav container */
+    padding:15px;
+    padding-bottom:4px;
+    font-size: 1.8em;
+    text-decoration: none; /* removes underline */
+    color: white; /* by default links are blue this makes them white */
+}
+
+nav a:hover { /*psuedo class which means these only apply when hovering*/
+    border-bottom: 2px orange solid;
+    font-size: 2em;
+    transition: .9s;
+}
+
+#me, #welcomeText {
+    float: left;
+}
+
+#welcomeText {
+    font-size: 1.8em;
+}
+
+#quote {
+    font-size: 1.2em;
+}
+
+#home {
+    border-bottom: 2px orange solid;
+    font-size: 2em;
+}
+
+footer {
+    clear: left;
+    color:red;
+    font-size: 0.8em;
+
+}
