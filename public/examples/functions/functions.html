@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> functions and prototypes </title>
+    </head>
+    <body>
+
+
+
+    <script>
+        function examples1() {
+            
+            console.log(arguments);
+            
+        }
+        
+        examples1("Jake",21);
+        
+        // This will work
+        //examples1 = "Name";
+        
+        console.log(examples1);
+        
+        let example2 = function() {
+            console.log("example2",arguments);
+            
+            
+            return function() {
+                return "done";
+            };
+        }("Hello Dolly", 0);
+        
+        console.log("yes", example2("1st Arg"));
+        
+        
+        // This will break the func...
+        //let name = "Jason";
+        //name = example2;
+        //name();
+        
+        
+    </script>
+
+
+    </body>
+</html>
