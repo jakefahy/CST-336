@@ -102,12 +102,16 @@
                 <div id="q8Feedback"></div>
                 <br><br>
                 
-              
-              
-              
+              <h2 id="totalScore"></h2>
+              <h2 id="congrats"></h2>
+              <br><br>
               <button type="submit" class="btn btn-primary">Submit Quiz</button>
               <br><br>
-              <h2 id="totalScore"></h2>
+              
+              
+              <h2 id="totalTimes"></h2>
+              <h1 id="prevScores"></h1>
+              
             </form>
         </main>
 
@@ -120,12 +124,19 @@
         <script>
             /* global $ */
             /* global _ */
+            let totalTimes = localStorage.getItem("totalTimesTaken");
+            let scoresArray = localStorage.getItem("scoreHistory");
+            if(scoresArray == null) {
+                scoresArray = [];
+            } else {
+                scoresArray = scoresArray.split(",");
+            }
         
             
             
             
             $(document).ready(function() {
-                var score = 0;
+            
                 var q1Ans = $("#ControlInput1");
                 let q2Ans = $("#question2");
                 let q6Ans = $("#question6");
@@ -161,10 +172,14 @@
                 }
                 
                 function checkCorrect(e) {
+                    
+                    var score = 0;
+                    
                     if(q1Ans.val().toLowerCase() === "sacramento") {
                         e.preventDefault();
                         rightAnswer(1);
-                        score+=20;
+                        score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(1);
@@ -173,7 +188,8 @@
                     if(q2Ans.val() == "mo") {
                         e.preventDefault();
                         rightAnswer(2);
-                        score+=20;
+                        score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(2);
@@ -182,7 +198,8 @@
                     if($("#Jefferson").is(":checked") && $("#Roosevelt").is(":checked") && !$("#Jackson").is(":checked") && !$("#Jackson").is(":checked")) {
                         e.preventDefault();
                         rightAnswer(3);
-                        score+=20;
+                        score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(3);
@@ -191,7 +208,8 @@
                     if($("#Rhode-Island").is(":checked")) {
                         e.preventDefault();
                         rightAnswer(4);
-                        score+=20;
+                        score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(4);
@@ -200,7 +218,8 @@
                     if($("#seal2").css("background-color") == "rgb(255, 255, 0)") {
                         e.preventDefault();
                         rightAnswer(5);
-                        score+=20;
+                        score+=12.50;
+                        
                     } else{
                         e.preventDefault();
                         wrongAnswer(5);
@@ -210,6 +229,7 @@
                         e.preventDefault();
                         rightAnswer(6);
                         score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(6);
@@ -218,7 +238,8 @@
                     if($("#mx").is(":checked")) {
                         e.preventDefault();
                         rightAnswer(7);
-                        score += 12.50;
+                        score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(7);
@@ -227,7 +248,8 @@
                     if($("#NY").is(":checked") && $("#PY").is(":checked") && !$("#CA").is(":checked") && !$("#MN").is(":checked")) {
                         e.preventDefault();
                         rightAnswer(8);
-                        score += 12.50;
+                        score+=12.50;
+                        
                     } else {
                         e.preventDefault();
                         wrongAnswer(8);
@@ -239,8 +261,20 @@
                     } else {
                        $("#totalScore").html('Total Score: ' + score);
                         $("#totalScore").css("color", "green"); 
+                        if(score == 100) {
+                            $("#congrats").html("Congrats on a perfect score !");
+                        }
                     }
+                    totalTimes++;
+                    localStorage.setItem("totalTimesTaken",totalTimes);
+                    $("#totalTimes").html("Quiz Taken: " + totalTimes + " time(s)");
+                    scoresArray.push(score);
+                    $("#prevScores").html("Score History: ");
+                    scoresArray.forEach(function(score) {
+                       $("#prevScores").append(score + " "); 
+                    });
                     
+                    localStorage.setItem("scoreHistory",scoresArray);
                     
                 }
             });
