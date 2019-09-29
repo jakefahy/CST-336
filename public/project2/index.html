@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Game of Thrones Quiz </title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="jumbotron text-center p-3 mb-2 bg-gradient-warning text-dark">
+            <h1 class="display-4"> What Game of Thrones House Are You ?</h1>
+            <p class="lead">This is a simple quiz to determine which house you would belong to from the show <i>Game of Thrones</i></p>
+            <hr class="my-7">
+        </div>
+        
+        <main class="d-flex justify-content-center flex-column p-5 bg-info">
+            
+            <input type="text-answer" class="form-control" id="name" placeholder="Please Enter Your Name">
+            <h2><span id="resultsArea"></span></h2>
+            <span id="imgArea" class="rounded"></span>
+            <h3><span id="quoteArea"></span></h3>
+            <h2><div id="questionArea" class="hide-when-loaded"></div></h2>
+            
+            
+            <button type="button" class="btn btn-secondary btn-lg btn-block p-5 hide-when-loaded" id="yesButton">Yes</button>
+            <button type="button" class="btn btn-secondary btn-lg btn-block p-5 hide-when-loaded" id="noButton">No</button>
+            <br><br><br>
+            <button type="button" class="btn btn-secondary btn-lg btn-block p-5" id="startButton">Start</button>
+        </main>
+        
+    
+        <script src="js/quiz.js"></script>
+    </body>
+</html>

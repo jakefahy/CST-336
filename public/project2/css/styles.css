@@ -1,0 +1,30 @@
+.bg-info {
+    background-color:SlateGrey !important;
+    color:white;
+}
+
+.hide-when-loaded {
+    display:none;
+}
+
+#questionArea, #resultsArea {
+    display: flex;
+    justify-content:center;
+    font-family: cursive;
+    font-size: 1.5em;
+    padding-bottom: 100px;
+}
+
+
+#imgArea {
+    display:flex;
+    justify-content:center;
+}
+
+#quoteArea {
+    padding-top: 20px;
+    font-family: cursive;
+    font-style: italic;
+    display:flex;
+    justify-content:center;
+}
