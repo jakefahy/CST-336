@@ -3,15 +3,17 @@
     <head>
         <title>Sign Up Page </title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         
-        <h1> Sign Up </h1>
+        <h1> Sign Up </h1> <br><br>
         
-        First Name: <input type="text" name="fName"><br>
-        Last Name: <input type="text" name="lName"><br>
-        Gender: <input type="radio" name="gender" value="m"> Male
-                <input type="radio" name="gender" value="f"> Female <br><br>
+        <form id="signupForm" method="GET" action="welcome.html">
+        First Name: <input type="text" name="fName" id ="Fname"><br>
+        Last Name: <input type="text" name="lName" id ="Lname"><br>
+        Gender: <input type="radio" name="gender" value="m" id="MALE"> Male
+                <input type="radio" name="gender" value="f" id="FEMALE"> Female <br><br>
         Zip Code: <input type="text" name="zip" id="zip"><br>
         City: <span id="city"></span><br>
         Latitude: <span id="lat"></span> <br>
@@ -19,10 +21,6 @@
         
         State:
         <select id="state" name="state">
-            <option value="">Select One</option>
-            <option value="ca"> California</option>
-            <option value="ny"> New York</option>
-            <option value="tx"> Texas</option>
         </select><br />
         
         Select a County: <select id="county"></select><br><br>
@@ -31,13 +29,32 @@
                           <span id="usernameError"></span><br>
         Password:         <input type="password" id="password" name="password"><br>
         Password Again:   <input type="password" id="passwordAgain"><br>
+                          <span id="passwordAgainError"></span><br><br>
         
         <input type="submit" value="Sign Up!">
-        
+        </form>
         
         
         <script>
         /* global $ */
+        
+        var usernameAvailable = false;
+            
+            $(document).ready(function() {
+               $.ajax({
+                   method: "GET",
+                   url: "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php",
+                   dataType: "json",
+                   data:{"state":$("#state").val()},
+                   success: function(result,status) {
+                       $("#state").html("<option> Select One </option>");
+                       for(let i = 0; i < result.length; i++) {
+                           $("#state").append("<option>" + result[i].usps + "</option>");
+                       }
+                   }
+               }); 
+            });
+        
             $("#zip").on("change",function() {
                 // alert($("#zip").val());
                 
@@ -64,13 +81,13 @@
                    dataType: "json",
                    data: { "state": $("#state").val()},
                    success: function(result,status) {
-                       
+                     
                        $("#county").html("<option> Select One </option>");
                        for(let i = 0; i < result.length; i++) {
                            $("#county").append("<option>" + result[i].county + "</option>");
                        }
                    }
-               });
+               }); 
               
             });// state
             
@@ -87,16 +104,50 @@
                             if(result.available){
                                 $("#usernameError").html("Username is available!");
                                 $("#usernameError").css("color", "green");
-                                //usernameAvailable = true;
+                                usernameAvailable = true;
                             }
                             else {
                                 $("#usernameError").html("Username is unavailable!");
                                 $("#usernameError").css("color", "red");
-                                //usernameAvailable = false;
+                                usernameAvailable = false;
                             }               
                         }
             });//ajax
         }); //username
+        
+        
+        
+        $("#signupForm").on("submit",function(event) {
+           //alert("Submitting Form...");
+           if(!isFormValid()) {
+               event.preventDefault();
+           }
+        });
+        
+        function isFormValid() {
+             var isValid = true;
+             if(!usernameAvailable) {
+                 isValid = false;
+             }
+             
+             if($("#username").val().length == 0) {
+                 isValid = false;
+                 $("#usernameError").html("Username is required");
+             }
+             
+             if(($("#password").val() != $("#passwordAgain").val())) {
+                 $("#passwordAgainError").html("Password Mismatch!");
+                 isValid = false;
+             }
+             
+             if($("#password").val().length < 6) {
+                 $("#passwordAgainError").html("Password needs to be atleast 6 characters");
+                 isValid = false;
+             }
+             
+             return isValid;
+        }
+        
             
         </script>
 
