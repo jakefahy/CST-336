@@ -1,0 +1,13 @@
+#inputArea {
+    display:flex;
+    justify-content:center;
+}
+
+#displayArea {
+    display: flex;
+    flex-direction:column;
+    text-align: center;
+    font-size: 1.4em;
+    max-width:500px;
+    margin:auto;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Project 3 </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1 class="jumbotron text-center bg-primary">Weather Tracker</h1>
+        
+        
+        <div id="inputArea">
+            <input type="text" id="city" placeholder="Enter a U.S. city">
+            &ensp;
+            <button type="button" id="cityButton" class="btn btn-dark">Search</button> 
+            &ensp;&ensp;
+            
+        </div>
+        
+        <hr>
+        
+        <div id="displayArea">
+            <br>
+            It is currently: 
+           <span id="weatherLabel"></span> 
+           <br>
+           The current temperature is:
+           <span id="currTemp"></span>
+           <br>
+           Today's high is:
+           <span id="maxTemp"></span>
+           <br>
+           Today's Low is:
+           <span id="lowTemp"></span>
+           <br>
+           The humidity is:
+           <span id="currHumid"></span>
+        </div>
+        
+        
+        <script>
+            /* global $ */
+            $("#displayArea").hide();
+            
+            $("#cityButton").on("click", function(){
+               let enteredCity = $("#city").val();
+               enteredCity += ",us";
+               
+               enteredCity = enteredCity.replace(" ", "+")
+               
+               console.log(enteredCity);
+               
+              $.ajax({
+                  method:"GET",
+                  url: "https://api.openweathermap.org/data/2.5/weather",
+                  dataType:"json",
+                  data: {"appid" : "2a142219f4d5727eaca8b8e35f4e11dd", "q": enteredCity},
+                  success:function(result,status) {
+                       $("#weatherLabel").html(result.weather[0].main);
+                       $("#currTemp").html(KtoF(result.main.temp));
+                       $("#currTemp").append(String.fromCharCode(176));
+                       $("#maxTemp").html(KtoF(result.main.temp_min));
+                       $("#maxTemp").append(String.fromCharCode(176));
+                       $("#lowTemp").html(KtoF(result.main.temp_max));
+                       $("#lowTemp").append(String.fromCharCode(176));
+                       $("#currHumid").html(result.main.humidity);
+                       $("#currHumid").append("%");
+                       $("#displayArea").show();
+                  }
+              }); // ajax
+               
+            }); //button
+            
+            
+            let KtoF = function(e) {
+                let res = e;
+                res = res - 273.15;
+                res = res * 1.8;
+                res = res + 32;
+                res = Math.ceil(res);
+                return res;
+            };
+            
+            
+        </script>
+        
+        
+        
+        
+        
+        
+
+    </body>
+</html>
