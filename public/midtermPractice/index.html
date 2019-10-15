@@ -1,0 +1,211 @@
+<html>
+
+<head>
+
+    <title>CST336 Midterm Exam Practice</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script> 
+
+    <style>
+
+        tr, td{
+
+            border:1px gray solid;
+
+            text-align: right;
+
+            padding:5px;
+
+        }
+
+        body, th {
+
+            text-align: center;
+
+        }
+
+        table {
+
+            margin: 0 auto;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1 class="jumbotron"> End-of-Summer Sale! </h1>
+
+    <h2> Cart </h2>    
+
+    <table>
+
+    <tr>
+
+        <th>Product</th>
+        
+        <th>Unit Price</th>
+
+        <th> Quantity </th>
+
+        <th>Total</th>
+
+    </tr>
+
+    <tr>
+
+        <td id="pName1"> </td>
+
+        <td id="pPrice1"> </td>
+
+        <td><input type="text" size="5" id="pQty1"></td>
+
+        <td id="ptotal1"> </td>
+
+    </tr>
+    
+    <tr>
+
+        <td id="pName2"> </td>
+
+        <td id="pPrice2"> </td>
+
+        <td><input type="text" size="5" id="pQty2"></td>
+
+        <td id="ptotal2"> </td>
+
+    </tr>
+    
+    
+
+    <tr>
+
+        <td>Discount</td>
+
+        <td> </td>
+
+        <td> </td>
+
+        <td> </td>
+
+    </tr>
+
+   <tr>
+
+        <td>Shipping</td>
+
+        <td> </td>
+
+        <td> </td>
+
+        <td id="shipTotal"> </td>
+
+    </tr>    
+
+    <tr>
+
+        <td>Subtotal</td>
+
+        <td> </td>
+
+        <td> </td>
+
+        <td id="subTotal"> </td>   
+
+    </tr>             
+
+
+
+    <tr>
+
+        <td>Tax (10%)</td>
+
+        <td></td>
+
+        <td></td>
+
+        <td id="taxTotal"> </td>       
+
+    </tr>
+
+      <tr>
+
+        <td>Total</td>
+
+        <td></td>
+
+        <td></td>
+
+        <td id="completeTotal"> </td>
+
+    </tr>
+
+    </table>
+
+    <br><br>
+
+    <strong>Promo Code: </strong> <input type="text">
+    <button id= "applyButton">Apply</button>
+
+
+    <h3>Shipping & handling</h3>
+    
+    <select id="shipping">
+        <option value=""> Select One</option>
+        <option value="25"> Next-Day Delivery: $25.00</option>
+        <option value="20"> Three-Day Delivery: $20.00</option>
+        <option value="7"> Regular Delivery: $7.00</option>
+    </select>
+    
+    
+    <script>
+        /* global $ */
+        /* global _ */
+        let total = 0;
+        $(document).ready(function(){
+        let tempArray;    
+            
+        $.ajax({
+                method: "GET",
+                url: "https://cst336.herokuapp.com/projects/api/promo_products.php",
+                dataType: "json",
+                success: function(result,status) {
+                    tempArray = result;
+                    tempArray = _.shuffle(tempArray);
+                    //console.log(tempArray);
+                    $("#pName1").html(tempArray[0].productName);
+                    $("#pPrice1").html("$" + tempArray[0].price);
+                    $("#pQty1").attr("placeholder",tempArray[0].qty);
+                    
+                    $("#pName2").html(tempArray[1].productName);
+                    $("#pPrice2").html("$" + tempArray[1].price);
+                    $("#pQty2").attr("placeholder",tempArray[1].qty);
+                    
+                }
+            }); // ajax
+        
+            
+            
+            
+            
+        });
+        
+        
+        $("#shipping").on("change", function(){
+           let s = $("#shipping").val();
+           let temp = parseInt(s);
+           $("#shipTotal").html("$" + s);
+        });
+        
+        
+    </script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Pixabay Lab </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        
+    </head>
+    <body>
+        <div class="jumbroton text-center p-5 bg-secondary">
+            <h1 class="display-4">Pixabay Image Search</h1>
+            <hr class="my-4" color="black">
+        </div>
+        
+        <br>
+        
+        <main>
+            
+            Keyword: &ensp; <input type="text" id="kwords" placeholder="Enter a keyword">
+            <br>
+            Orientation: &ensp; 
+            <select id="orient"> 
+            <option>Vertical</option>
+            <option>Horizontal</option>
+            </select>
+            <br>
+            <button type="button" id="searchButton">Search</button> 
+             
+            
+        </main>
+        
+        <hr>
+        
+        <div id="likes"> </div>
+        
+        <div id="imgBox">
+                
+               <span id="likes1"><img id="img1" class="rounded border border-dark"><span id="textArea1"></span></span>
+                 &emsp;
+                <span id="likes2"><img id="img2" class="rounded border border-dark"><span id="textArea2"></span></span>
+                &emsp;
+                <span id="likes3"><img id="img3" class="rounded border border-dark"><span id="textArea3"></span></span>
+                &emsp;
+                <span id="likes4"><img id="img4" class="rounded border border-dark"><span id="textArea4"></span></span>
+            </div> 
+
+
+
+    <script>
+        /* global $ */
+        
+        $("#imgBox").hide();
+        
+        $("#searchButton").on("click", function() {
+           $("#imgBox").show();
+           let temp = $("#kwords").val();
+           let res;
+           let direction = $("#orient").val().toLowerCase();
+           console.log(direction);
+                       
+           res = temp.replace(" ", "+");
+          
+           $("#textArea1").empty();
+           $("#textArea2").empty();
+           $("#textArea3").empty();
+           $("#textArea4").empty();
+          
+           
+           console.log(res);
+           
+           $.ajax({
+               method:"GET",
+               url: "https://pixabay.com/api/",
+               dataType: "json",
+               data: { "key":"5589438-47a0bca778bf23fc2e8c5bf3e", "q": res, "orientation": direction},
+               success: function(result,status) {
+                        $("#img1").attr("src", result.hits[0].webformatURL);
+                        $("#img2").attr("src", result.hits[1].webformatURL);
+                        $("#img3").attr("src", result.hits[2].webformatURL);
+                        $("#img4").attr("src", result.hits[3].webformatURL);
+                        $("#textArea1").append("Likes: " + result.hits[0].likes);
+                        $("#textArea2").append("Likes: " + result.hits[1].likes);
+                        $("#textArea3").append("Likes: " + result.hits[2].likes);
+                        $("#textArea4").append("Likes: " + result.hits[3].likes);
+                       
+                    }
+           });
+           
+            
+        });
+        
+        
+        
+        
+    </script>
+    </body>
+</html>

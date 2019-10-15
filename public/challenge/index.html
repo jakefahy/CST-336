@@ -20,16 +20,17 @@
         table {
             margin: 0 auto;
         }
+
     </style>
 </head>
 
-<body>
+<body class="bg-info">
 
-    <h1 class="jumbotron"> Holiday Shopping  </h1>
+<h1 class="jumbotron"> Holiday Shopping  </h1>
 
-    <h2> Cart </h2>
+<h2> Cart </h2>
 
-    <table>
+<table class="table">
     <tr>
         <th>Product</th>
         <th>Unit Price</th>
@@ -40,30 +41,30 @@
     <tr>
         <td>Fruit Cake</td>
         <td>$30</td>
-        <td><input type="text" class="qty" id="qty_item1" size="5" value="1">  </td>
+        <td><input type="number" class="qty" id="qty_item1" size="5" value="1">  </td>
         <td id="totalItem1">$30</td>
     </tr>
 
     <tr>
         <td>Piñata (Medium size)</td>
         <td>$20</td>
-        <td><input type="text" class="qty" id="qty_item2" size="5" value="2">  </td>
+        <td><input type="number" class="qty" id="qty_item2" size="5" value="2">  </td>
         <td id="totalItem2">$40</td>
     </tr>
 
-   <tr>
+    <tr>
         <td>Shipping</td>
         <td></td>
         <td> </td>
         <td id="shippingCost">$10</td>
-    </tr>    
+    </tr>
 
     <tr>
         <td>Subtotal</td>
         <td> </td>
         <td> </td>
         <td id="subtotal">$80</td>
-    </tr>             
+    </tr>
 
     <tr>
         <td>Tax (10%)</td>
@@ -78,28 +79,91 @@
         <td></td>
         <td id="total">$88</td>
     </tr>
-    </table>
+</table>
 
-    <h3>Shipping & handling</h3>
-    <br><br>
-    <input type="radio" name="shipping" id="nextDay" value="Next-Day Delivery: $15.00"> <label for="Next-Day Delivery: $15.00" >Next-Day Delivery: $15.00</label> <br>
-    <input type="radio" name="shipping" id="threeDay" value="Three Day Delivery: $10.00"> <label for="Three Day Delivery: $10.00" >Three Day Delivery: $10.00</label> <br>
-    <input type="radio" name="shipping" id="regular" value="Regular (5-8 days): $5.00"> <label for="Regular (5-8 days): $5.00" >Regular (5-8 days): $5.00</label> <br>
-    <br><br>
+<h3>Shipping & handling</h3>
+<input type="radio" name="ship" id="NextDay" value="15"><label for="NextDay">Next-day Delivery: $15.00</label><br>
+<input type="radio" name="ship" id="threeDay" value="10"><label for="threeDay">Three-day Delivery: $10.00</label><br>
+<input type="radio" name="ship" id="regDay" value="5"><label for="regDay">Regular (5-8 days): Delivery $5.00</label>
+<br><br>
 
-    <input type="checkbox" id="terms" name="terms">
-    <span id="termsMessage" >I accept the terms of this purchase.</span>
+<input type="checkbox" id="terms" name="terms">
+<span id="termsMessage" >I accept the terms of this purchase.</span>
+<br>
+<span id="warn"></span>
+<br><br>
 
-    <br><br>
+<input type="submit" value="CONFIRM PURCHASE" id="subButton" />
+<script>
+/* global $ */
+    $(document).ready(function(){
+        let total1 = 30;
+        let total2 = 40;
+        let totals = 10;
+        let subt;
+        let tx;
+        $("#qty_item1").val();
+        $("#totalItem1").html();
+        $("input[name=ship]:checked").val();
+        $("#shippingCost").html();
+        $("#total").html();
+        $("#tax").html();
+        $("#subtotal").html();
+        $("#qty_item2").val();
 
-    <input type="submit" value="CONFIRM PURCHASE" />
-    
-    
-    <script>
-        
-        
-        
-    </script>
-    
+        $("#qty_item1").on("change", function () {
+            total1 = $("#qty_item1").val() * 30;
+            $("#totalItem1").html("$" + total1);
+            subt = total1 +total2 +totals;
+            $("#subtotal").html("$" + subt);
+            taxes();
+            total();
+        });
+
+        $("#qty_item2").on("change", function () {
+            total2 = $("#qty_item2").val() * 20;
+            $("#totalItem2").html("$" + total2);
+            subt = total1 +total2 +totals;
+            $("#subtotal").html("$" + subt);
+            taxes();
+            total();
+        });
+        $("input[name=ship]").on("click",function () { 
+            let stuf = $("input[name=ship]:checked").val();
+            totals = parseInt(stuf);
+            $("#shippingCost").html("$" + totals);
+            subt = total1 +total2 +totals;
+            $("#subtotal").html("$" + subt);
+            taxes();
+            total();
+        });
+
+        let taxes = function () {
+            tx = subt * .10;
+            $("#tax").html("$" + subt * .10);
+        };
+
+        let total = function () {
+            $("#total").html("$" + (subt + tx));
+        };
+
+        $("#subButton").on("click", function (e) {
+            if (!$("#terms").is(":checked")) {
+                $("#termsMessage").css("color", "red");
+                e.preventDefault();
+            }else if(!$("input[name=ship]").is(":checked")){
+                $("#warn").html("You need to select a shipping option!");
+                $("#warn").css("color", "red");
+        }else {
+                $("#warn").html("Thank You for your Purchase!");
+                $("#warn").css("color","green");
+            }
+        });
+
+
+
+
+    });
+</script>
 </body>
-</html>
+</html
