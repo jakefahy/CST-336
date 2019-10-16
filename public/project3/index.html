@@ -48,7 +48,7 @@
                let enteredCity = $("#city").val();
                enteredCity += ",us";
                
-               enteredCity = enteredCity.replace(" ", "+")
+               enteredCity = enteredCity.replace(" ", "+");
                
                console.log(enteredCity);
                
@@ -61,9 +61,9 @@
                        $("#weatherLabel").html(result.weather[0].main);
                        $("#currTemp").html(KtoF(result.main.temp));
                        $("#currTemp").append(String.fromCharCode(176));
-                       $("#maxTemp").html(KtoF(result.main.temp_min));
+                       $("#maxTemp").html(KtoF(result.main.temp_max));
                        $("#maxTemp").append(String.fromCharCode(176));
-                       $("#lowTemp").html(KtoF(result.main.temp_max));
+                       $("#lowTemp").html(KtoF(result.main.temp_min));
                        $("#lowTemp").append(String.fromCharCode(176));
                        $("#currHumid").html(result.main.humidity);
                        $("#currHumid").append("%");
@@ -77,7 +77,7 @@
             let KtoF = function(e) {
                 let res = e;
                 res = res - 273.15;
-                res = res * 1.8;
+                res = res * 1.8; 
                 res = res + 32;
                 res = Math.ceil(res);
                 return res;
